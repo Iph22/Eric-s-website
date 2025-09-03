@@ -289,30 +289,14 @@ class MediaGallery {
 
     async scanFolder(folderPath, folderKey) {
         try {
-            const apiEndpoints = {
-                lifestyle: '/api/lifestyle',
-                trainingVideos: '/api/training-videos',
-                trainingPictures: '/api/training-pictures'
-            };
+            const response = await fetch('/media.json');
+            const mediaData = await response.json();
 
-            const endpoint = apiEndpoints[folderKey];
-            if (!endpoint) {
-                console.error(`No API endpoint for folder key: ${folderKey}`);
-                return [];
-            }
-
-            const response = await fetch(`http://localhost:3000${endpoint}`);
-            const data = await response.json();
-
-            if (data.success) {
-                return data.files || [];
-            } else {
-                console.error(`API error for ${folderKey}:`, data.error);
-                return [];
-            }
+            // Return the array for the matching key
+            const files = mediaData[folderKey] || [];
+            return files;
         } catch (error) {
-            console.error(`Network error loading ${folderKey}:`, error);
-            // Return empty array if server is not running
+            console.error(`Error loading media.json for ${folderKey}:`, error);
             return [];
         }
     }
