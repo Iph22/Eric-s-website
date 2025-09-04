@@ -21,10 +21,6 @@
       "path": "/Lifestyle Media/IMG-20250830-WA0020.jpg"
     },
     {
-      "name": "IMG-20250830-WA0021.jpg",
-      "path": "/Lifestyle Media/IMG-20250830-WA0021.jpg"
-    },
-    {
       "name": "IMG-20250830-WA0022.jpg",
       "path": "/Lifestyle Media/IMG-20250830-WA0022.jpg"
     },
@@ -37,20 +33,8 @@
       "path": "/Lifestyle Media/IMG-20250830-WA0024.jpg"
     },
     {
-      "name": "IMG-20250830-WA0025.jpg",
-      "path": "/Lifestyle Media/IMG-20250830-WA0025.jpg"
-    },
-    {
-      "name": "IMG-20250830-WA0026.jpg",
-      "path": "/Lifestyle Media/IMG-20250830-WA0026.jpg"
-    },
-    {
-      "name": "IMG-20250830-WA0027.jpg",
-      "path": "/Lifestyle Media/IMG-20250830-WA0027.jpg"
-    },
-    {
-      "name": "IMG-20250830-WA0028.jpg",
-      "path": "/Lifestyle Media/IMG-20250830-WA0028.jpg"
+      "name": "IMG-20250830-WA0032.jpg",
+      "path": "/Lifestyle Media/IMG-20250830-WA0032.jpg"
     },
     {
       "name": "VID-20250830-WA0015.mp4",
@@ -63,6 +47,22 @@
     {
       "name": "VID-20250830-WA0022.mp4",
       "path": "/Lifestyle Media/VID-20250830-WA0022.mp4"
+    },
+    {
+      "name": "WhatsApp Image 2025-08-30 at 18.31.50_024d5a30.jpg",
+      "path": "/Lifestyle Media/WhatsApp Image 2025-08-30 at 18.31.50_024d5a30.jpg"
+    },
+    {
+      "name": "WhatsApp Image 2025-08-30 at 18.31.50_20127369.jpg",
+      "path": "/Lifestyle Media/WhatsApp Image 2025-08-30 at 18.31.50_20127369.jpg"
+    },
+    {
+      "name": "WhatsApp Image 2025-08-30 at 18.31.51_be71c141.jpg",
+      "path": "/Lifestyle Media/WhatsApp Image 2025-08-30 at 18.31.51_be71c141.jpg"
+    },
+    {
+      "name": "WhatsApp Image 2025-08-30 at 18.31.52_d8c157c7.jpg",
+      "path": "/Lifestyle Media/WhatsApp Image 2025-08-30 at 18.31.52_d8c157c7.jpg"
     }
   ],
   "trainingVideos": [
@@ -91,32 +91,12 @@
       "path": "/Training Videos/VID-20250830-WA0009.mp4"
     },
     {
-      "name": "VID-20250830-WA0010.mp4",
-      "path": "/Training Videos/VID-20250830-WA0010.mp4"
-    },
-    {
-      "name": "VID-20250830-WA0011.mp4",
-      "path": "/Training Videos/VID-20250830-WA0011.mp4"
-    },
-    {
-      "name": "VID-20250830-WA0012.mp4",
-      "path": "/Training Videos/VID-20250830-WA0012.mp4"
-    },
-    {
       "name": "VID-20250830-WA0013.mp4",
       "path": "/Training Videos/VID-20250830-WA0013.mp4"
     },
     {
       "name": "VID-20250830-WA0014.mp4",
       "path": "/Training Videos/VID-20250830-WA0014.mp4"
-    },
-    {
-      "name": "VID-20250830-WA0015.mp4",
-      "path": "/Training Videos/VID-20250830-WA0015.mp4"
-    },
-    {
-      "name": "VID-20250830-WA0016.mp4",
-      "path": "/Training Videos/VID-20250830-WA0016.mp4"
     },
     {
       "name": "VID-20250830-WA0017.mp4",
@@ -137,6 +117,26 @@
     {
       "name": "VID-20250830-WA0021.mp4",
       "path": "/Training Videos/VID-20250830-WA0021.mp4"
+    },
+    {
+      "name": "WhatsApp Video 2025-08-30 at 17.58.07_9dc7aedf.mp4",
+      "path": "/Training Videos/WhatsApp Video 2025-08-30 at 17.58.07_9dc7aedf.mp4"
+    },
+    {
+      "name": "WhatsApp Video 2025-08-30 at 18.21.41_76182cec.mp4",
+      "path": "/Training Videos/WhatsApp Video 2025-08-30 at 18.21.41_76182cec.mp4"
+    },
+    {
+      "name": "WhatsApp Video 2025-08-30 at 18.22.04_357b9a98.mp4",
+      "path": "/Training Videos/WhatsApp Video 2025-08-30 at 18.22.04_357b9a98.mp4"
+    },
+    {
+      "name": "WhatsApp Video 2025-08-30 at 18.22.04_669988ae.mp4",
+      "path": "/Training Videos/WhatsApp Video 2025-08-30 at 18.22.04_669988ae.mp4"
+    },
+    {
+      "name": "WhatsApp Video 2025-08-30 at 18.27.46_4684b117.mp4",
+      "path": "/Training Videos/WhatsApp Video 2025-08-30 at 18.27.46_4684b117.mp4"
     }
   ],
   "trainingPictures": [
@@ -169,28 +169,28 @@
       "path": "/Training Pictures/IMG-20250830-WA0011.jpg"
     },
     {
-      "name": "IMG-20250830-WA0012.jpg",
-      "path": "/Training Pictures/IMG-20250830-WA0012.jpg"
+      "name": "IMG-20250830-WA0021.jpg",
+      "path": "/Training Pictures/IMG-20250830-WA0021.jpg"
     },
     {
-      "name": "IMG-20250830-WA0029.jpg",
-      "path": "/Training Pictures/IMG-20250830-WA0029.jpg"
+      "name": "IMG-20250830-WA0025.jpg",
+      "path": "/Training Pictures/IMG-20250830-WA0025.jpg"
     },
     {
-      "name": "IMG-20250830-WA0030.jpg",
-      "path": "/Training Pictures/IMG-20250830-WA0030.jpg"
+      "name": "IMG-20250830-WA0026.jpg",
+      "path": "/Training Pictures/IMG-20250830-WA0026.jpg"
     },
     {
-      "name": "IMG-20250830-WA0031.jpg",
-      "path": "/Training Pictures/IMG-20250830-WA0031.jpg"
-    },
-    {
-      "name": "IMG-20250830-WA0032.jpg",
-      "path": "/Training Pictures/IMG-20250830-WA0032.jpg"
+      "name": "IMG-20250830-WA0027.jpg",
+      "path": "/Training Pictures/IMG-20250830-WA0027.jpg"
     },
     {
       "name": "IMG-20250830-WA0033.jpg",
       "path": "/Training Pictures/IMG-20250830-WA0033.jpg"
+    },
+    {
+      "name": "SEED Academy Day Camp '25.jpg",
+      "path": "/Training Pictures/SEED Academy Day Camp '25.jpg"
     }
   ]
 }
