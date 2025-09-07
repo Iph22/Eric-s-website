@@ -38,10 +38,6 @@ fileInput.accept = 'image/*';
 fileInput.style.display = 'none';
 document.body.appendChild(fileInput);
 
-// Handle profile picture click
-document.querySelector('.profile-circle').addEventListener('click', () => {
-    fileInput.click();
-});
 
 // Handle file selection
 fileInput.addEventListener('change', (e) => {
