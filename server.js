@@ -44,7 +44,7 @@ async function scanDirectory(dirPath) {
                 return IMAGE_EXTENSIONS.includes(ext) || VIDEO_EXTENSIONS.includes(ext);
             })
             .map(file => getFileInfo(path.join(dirPath, file), file));
-        
+
         const fileInfos = await Promise.all(fileInfoPromises);
         return fileInfos.filter(info => info !== null);
     } catch (error) {
@@ -93,21 +93,41 @@ app.get('/api/training-pictures', async (req, res) => {
     }
 });
 
+// API endpoint to get 40 Under 40 Award media
+app.get('/api/forty-under-40', async (req, res) => {
+    try {
+        const fortyUnder40Dir = path.join(__dirname, '40 Under 40');
+        const files = await scanDirectory(fortyUnder40Dir);
+        // Sort files to ensure images come first, then videos
+        const sortedFiles = files.sort((a, b) => {
+            if (a.isImage && !b.isImage) return -1;
+            if (!a.isImage && b.isImage) return 1;
+            return a.name.localeCompare(b.name);
+        });
+        res.json({ success: true, files: sortedFiles });
+    } catch (error) {
+        console.error('Error getting 40 Under 40 media:', error);
+        res.status(500).json({ success: false, error: 'Failed to load 40 Under 40 media' });
+    }
+});
+
 // API endpoint to refresh all media (useful for development)
 app.get('/api/refresh', async (req, res) => {
     try {
-        const [lifestyle, videos, pictures] = await Promise.all([
+        const [lifestyle, videos, pictures, fortyUnder40] = await Promise.all([
             scanDirectory(path.join(__dirname, 'Lifestyle Media')),
             scanDirectory(path.join(__dirname, 'Training Videos')),
-            scanDirectory(path.join(__dirname, 'Training Pictures'))
+            scanDirectory(path.join(__dirname, 'Training Pictures')),
+            scanDirectory(path.join(__dirname, '40 Under 40'))
         ]);
-        
+
         res.json({
             success: true,
             data: {
                 lifestyle: lifestyle,
                 trainingVideos: videos.filter(file => file.isVideo),
-                trainingPictures: pictures.filter(file => file.isImage)
+                trainingPictures: pictures.filter(file => file.isImage),
+                fortyUnder40: fortyUnder40
             }
         });
     } catch (error) {

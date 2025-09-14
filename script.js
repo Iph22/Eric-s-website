@@ -551,13 +551,15 @@ class MediaGallery {
 let mediaGallery;
 document.addEventListener('DOMContentLoaded', () => {
     mediaGallery = new MediaGallery();
+    initializeFortyUnder40Gallery();
 });
 
 // Add refresh functionality for development
-window.refreshMediaGalleries = () => {
+window.refreshMediaGalleries = async () => {
     if (mediaGallery) {
-        mediaGallery.refreshGalleries();
-        console.log('Media galleries refreshed!');
+        await mediaGallery.refreshGalleries();
+        await initializeFortyUnder40Gallery();
+        console.log('All media galleries refreshed!');
     }
 };
 
@@ -725,4 +727,119 @@ window.loadSampleMedia = () => {
     console.log('2. Place image files in "Training Pictures" folder');
     console.log('3. Place photos/videos in "Lifestyle Media" folder');
     console.log('4. Run refreshMediaGalleries() to reload');
+};
+
+// 40 Under 40 Gallery Functionality
+async function initializeFortyUnder40Gallery() {
+    try {
+        // Fetch media from the 40 Under 40 folder
+        const response = await fetch('/api/forty-under-40');
+        const data = await response.json();
+
+        if (data.success && data.files && data.files.length > 0) {
+            const files = data.files;
+
+            // Find the first image for the thumbnail
+            const firstImage = files.find(file => file.isImage);
+            if (firstImage) {
+                const thumbnail = document.getElementById('forty-under-40-thumbnail');
+                if (thumbnail) {
+                    thumbnail.src = firstImage.path;
+                    thumbnail.alt = '40 Under 40 Award';
+                }
+            }
+
+            // Create Fancybox gallery links
+            createFortyUnder40FancyboxGallery(files);
+
+            // Set up click handler for the gallery item
+            const galleryItem = document.getElementById('forty-under-40-gallery-item');
+            if (galleryItem) {
+                galleryItem.addEventListener('click', () => {
+                    // Trigger the first gallery item click to open Fancybox
+                    const firstGalleryLink = document.querySelector('#forty-under-40-fancybox-gallery a[data-fancybox="fortyUnder40"]');
+                    if (firstGalleryLink) {
+                        firstGalleryLink.click();
+                    }
+                });
+            }
+        } else {
+            console.warn('No media files found in 40 Under 40 folder');
+        }
+    } catch (error) {
+        console.error('Error loading 40 Under 40 gallery:', error);
+    }
+}
+
+function createFortyUnder40FancyboxGallery(files) {
+    const galleryContainer = document.getElementById('forty-under-40-fancybox-gallery');
+    if (!galleryContainer) return;
+
+    // Clear any existing content
+    galleryContainer.innerHTML = '';
+
+    files.forEach((file, index) => {
+        const link = document.createElement('a');
+        link.href = file.path;
+        link.setAttribute('data-fancybox', 'fortyUnder40');
+        link.setAttribute('data-caption', `40 Under 40 Award - ${file.name}`);
+
+        // For videos, add specific data attributes
+        if (file.isVideo) {
+            link.setAttribute('data-type', 'video');
+            link.setAttribute('data-video', file.path);
+        }
+
+        // Add the link to the container (hidden)
+        galleryContainer.appendChild(link);
+    });
+
+    // Initialize Fancybox for the 40 Under 40 gallery
+    if (typeof Fancybox !== 'undefined') {
+        Fancybox.bind('[data-fancybox="fortyUnder40"]', {
+            // Fancybox options
+            Toolbar: {
+                display: {
+                    left: ["infobar"],
+                    middle: ["zoomIn", "zoomOut", "toggle1to1", "rotateCCW", "rotateCW", "flipX", "flipY"],
+                    right: ["slideshow", "thumbs", "close"]
+                }
+            },
+            Thumbs: {
+                autoStart: false,
+                hideOnClose: true
+            },
+            // Enable keyboard navigation
+            keyboard: {
+                Escape: "close",
+                Delete: "close",
+                Backspace: "close",
+                PageUp: "next",
+                PageDown: "prev",
+                ArrowRight: "next",
+                ArrowLeft: "prev",
+                ArrowUp: "prev",
+                ArrowDown: "next",
+                Home: "first",
+                End: "last"
+            },
+            // Enable touch/swipe navigation
+            touch: {
+                vertical: true,
+                momentum: true
+            },
+            // Auto-play for videos
+            Video: {
+                autoplay: true,
+                loop: false,
+                muted: true
+            }
+        });
+    }
+}
+
+// Function to refresh 40 Under 40 gallery
+window.refreshFortyUnder40Gallery = async () => {
+    await initializeFortyUnder40Gallery();
+    console.log('40 Under 40 gallery refreshed!');
 };

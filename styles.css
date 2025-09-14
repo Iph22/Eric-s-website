@@ -879,6 +879,72 @@ section {
     opacity: 0.8;
 }
 
+/* 40 Under 40 Fancybox Gallery Styles */
+#forty-under-40-fancybox-gallery {
+    display: none;
+}
+
+#forty-under-40-gallery-item {
+    cursor: pointer;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+#forty-under-40-gallery-item:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+}
+
+/* Custom Fancybox styling to match site theme */
+.fancybox__container {
+    --fancybox-bg: rgba(90, 28, 235, 0.95);
+}
+
+.fancybox__toolbar {
+    background: rgba(0, 0, 0, 0.8);
+    backdrop-filter: blur(10px);
+}
+
+.fancybox__button {
+    color: #fff;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 8px;
+    transition: all 0.3s ease;
+}
+
+.fancybox__button:hover {
+    background: rgba(255, 255, 255, 0.2);
+    transform: scale(1.1);
+}
+
+.fancybox__caption {
+    background: rgba(0, 0, 0, 0.8);
+    backdrop-filter: blur(10px);
+    color: #fff;
+    font-family: 'Inter', sans-serif;
+}
+
+/* Video styling in Fancybox */
+.fancybox__html5video {
+    border-radius: 15px;
+    overflow: hidden;
+}
+
+/* Thumbnail navigation styling */
+.fancybox__thumbs {
+    background: rgba(0, 0, 0, 0.8);
+    backdrop-filter: blur(10px);
+}
+
+.fancybox__thumb {
+    border-radius: 8px;
+    overflow: hidden;
+    transition: all 0.3s ease;
+}
+
+.fancybox__thumb:hover {
+    transform: scale(1.05);
+}
+
 /* Responsive Design */
 @media (max-width: 768px) {
     .nav-menu {
