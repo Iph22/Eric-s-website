@@ -22,7 +22,7 @@ async function getFileInfo(filePath, fileName) {
         const stats = await fs.stat(filePath);
         return {
             name: fileName,
-            path: filePath.replace(__dirname, '').replace(/\\/g, '/'),
+            path: '/' + path.relative(__dirname, filePath).replace(/\\/g, '/'),
             size: stats.size,
             modified: stats.mtime,
             isVideo: VIDEO_EXTENSIONS.includes(path.extname(fileName).toLowerCase()),

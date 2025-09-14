@@ -53,7 +53,7 @@ fileInput.addEventListener('change', (e) => {
 });
 
 // Gallery image modal functionality
-const galleryItems = document.querySelectorAll('.gallery-item');
+const galleryItems = document.querySelectorAll('.gallery-item:not(#forty-under-40-gallery-item)');
 const modal = createModal();
 
 galleryItems.forEach(item => {
@@ -730,6 +730,9 @@ window.loadSampleMedia = () => {
 };
 
 // 40 Under 40 Gallery Functionality
+let fortyUnder40Files = [];
+let currentSlideIndex = 0;
+
 async function initializeFortyUnder40Gallery() {
     try {
         // Fetch media from the 40 Under 40 folder
@@ -737,30 +740,34 @@ async function initializeFortyUnder40Gallery() {
         const data = await response.json();
 
         if (data.success && data.files && data.files.length > 0) {
-            const files = data.files;
+            fortyUnder40Files = data.files;
+            console.log('40 Under 40 files loaded:', fortyUnder40Files);
 
             // Find the first image for the thumbnail
-            const firstImage = files.find(file => file.isImage);
+            const firstImage = fortyUnder40Files.find(file => file.isImage);
             if (firstImage) {
                 const thumbnail = document.getElementById('forty-under-40-thumbnail');
                 if (thumbnail) {
                     thumbnail.src = firstImage.path;
                     thumbnail.alt = '40 Under 40 Award';
                 }
+            } else {
+                // If no image found, use the first file
+                const firstFile = fortyUnder40Files[0];
+                if (firstFile) {
+                    const thumbnail = document.getElementById('forty-under-40-thumbnail');
+                    if (thumbnail) {
+                        thumbnail.src = firstFile.path;
+                        thumbnail.alt = '40 Under 40 Award';
+                    }
+                }
             }
-
-            // Create Fancybox gallery links
-            createFortyUnder40FancyboxGallery(files);
 
             // Set up click handler for the gallery item
             const galleryItem = document.getElementById('forty-under-40-gallery-item');
             if (galleryItem) {
                 galleryItem.addEventListener('click', () => {
-                    // Trigger the first gallery item click to open Fancybox
-                    const firstGalleryLink = document.querySelector('#forty-under-40-fancybox-gallery a[data-fancybox="fortyUnder40"]');
-                    if (firstGalleryLink) {
-                        firstGalleryLink.click();
-                    }
+                    showFortyUnder40Preview();
                 });
             }
         } else {
@@ -771,71 +778,239 @@ async function initializeFortyUnder40Gallery() {
     }
 }
 
-function createFortyUnder40FancyboxGallery(files) {
-    const galleryContainer = document.getElementById('forty-under-40-fancybox-gallery');
-    if (!galleryContainer) return;
+function showFortyUnder40Preview() {
+    if (fortyUnder40Files.length === 0) return;
 
-    // Clear any existing content
-    galleryContainer.innerHTML = '';
+    // Create or get the preview modal
+    let previewModal = document.getElementById('forty-under-40-preview-modal');
+    if (!previewModal) {
+        previewModal = createFortyUnder40PreviewModal();
+    }
 
-    files.forEach((file, index) => {
-        const link = document.createElement('a');
-        link.href = file.path;
-        link.setAttribute('data-fancybox', 'fortyUnder40');
-        link.setAttribute('data-caption', `40 Under 40 Award - ${file.name}`);
+    // Show the modal
+    previewModal.style.display = 'block';
+}
 
-        // For videos, add specific data attributes
+function showFortyUnder40Slideshow() {
+    if (fortyUnder40Files.length === 0) return;
+
+    // Create or get the slideshow modal
+    let slideshowModal = document.getElementById('forty-under-40-slideshow-modal');
+    if (!slideshowModal) {
+        slideshowModal = createFortyUnder40SlideshowModal();
+    }
+
+    // Update the slideshow content
+    updateSlideshowContent();
+
+    // Show the modal
+    slideshowModal.style.display = 'block';
+}
+
+function createFortyUnder40PreviewModal() {
+    const modal = document.createElement('div');
+    modal.id = 'forty-under-40-preview-modal';
+    modal.className = 'modal preview-modal';
+    modal.innerHTML = `
+        <div class="modal-content preview-content">
+            <span class="modal-close">&times;</span>
+            <div class="preview-header">
+                <h3>40 Under 40 Award</h3>
+                <p>Sports Category Winner, 2025</p>
+            </div>
+            <div class="preview-grid" id="preview-grid">
+                <!-- Preview items will be inserted here -->
+            </div>
+        </div>
+    `;
+
+    document.body.appendChild(modal);
+
+    // Populate the preview grid
+    const previewGrid = modal.querySelector('#preview-grid');
+    fortyUnder40Files.forEach((file, index) => {
+        const previewItem = document.createElement('div');
+        previewItem.className = 'preview-item';
+        
         if (file.isVideo) {
-            link.setAttribute('data-type', 'video');
-            link.setAttribute('data-video', file.path);
+            previewItem.innerHTML = `
+                <div class="preview-media">
+                    <video src="${file.path}" muted preload="metadata"></video>
+                    <div class="preview-overlay">
+                        <i class="fas fa-play"></i>
+                        <span>Video</span>
+                    </div>
+                </div>
+                <div class="preview-caption">
+                    <h4>${file.name}</h4>
+                </div>
+            `;
+        } else {
+            previewItem.innerHTML = `
+                <div class="preview-media">
+                    <img src="${file.path}" alt="${file.name}">
+                    <div class="preview-overlay">
+                        <i class="fas fa-search-plus"></i>
+                        <span>Image</span>
+                    </div>
+                </div>
+                <div class="preview-caption">
+                    <h4>${file.name}</h4>
+                </div>
+            `;
         }
 
-        // Add the link to the container (hidden)
-        galleryContainer.appendChild(link);
+        // Add click handler to open individual item in slideshow
+        previewItem.addEventListener('click', () => {
+            currentSlideIndex = index;
+            modal.style.display = 'none';
+            showFortyUnder40Slideshow();
+        });
+
+        previewGrid.appendChild(previewItem);
     });
 
-    // Initialize Fancybox for the 40 Under 40 gallery
-    if (typeof Fancybox !== 'undefined') {
-        Fancybox.bind('[data-fancybox="fortyUnder40"]', {
-            // Fancybox options
-            Toolbar: {
-                display: {
-                    left: ["infobar"],
-                    middle: ["zoomIn", "zoomOut", "toggle1to1", "rotateCCW", "rotateCW", "flipX", "flipY"],
-                    right: ["slideshow", "thumbs", "close"]
-                }
-            },
-            Thumbs: {
-                autoStart: false,
-                hideOnClose: true
-            },
-            // Enable keyboard navigation
-            keyboard: {
-                Escape: "close",
-                Delete: "close",
-                Backspace: "close",
-                PageUp: "next",
-                PageDown: "prev",
-                ArrowRight: "next",
-                ArrowLeft: "prev",
-                ArrowUp: "prev",
-                ArrowDown: "next",
-                Home: "first",
-                End: "last"
-            },
-            // Enable touch/swipe navigation
-            touch: {
-                vertical: true,
-                momentum: true
-            },
-            // Auto-play for videos
-            Video: {
-                autoplay: true,
-                loop: false,
-                muted: true
+    // Add event listeners
+    const closeBtn = modal.querySelector('.modal-close');
+    closeBtn.addEventListener('click', () => {
+        modal.style.display = 'none';
+    });
+
+    // Close modal when clicking outside
+    modal.addEventListener('click', (e) => {
+        if (e.target === modal) {
+            modal.style.display = 'none';
+        }
+    });
+
+    // Close modal with Escape key
+    document.addEventListener('keydown', function previewKeyHandler(e) {
+        if (modal.style.display === 'block' && e.key === 'Escape') {
+            modal.style.display = 'none';
+        }
+    });
+
+    return modal;
+}
+
+function createFortyUnder40SlideshowModal() {
+    const modal = document.createElement('div');
+    modal.id = 'forty-under-40-slideshow-modal';
+    modal.className = 'modal slideshow-modal';
+    modal.innerHTML = `
+        <div class="modal-content slideshow-content">
+            <span class="modal-close">&times;</span>
+            <div class="slideshow-container">
+                <button class="slideshow-nav slideshow-prev" id="slideshow-prev">
+                    <i class="fas fa-chevron-left"></i>
+                </button>
+                <div class="slideshow-media" id="slideshow-media">
+                    <!-- Media content will be inserted here -->
+                </div>
+                <button class="slideshow-nav slideshow-next" id="slideshow-next">
+                    <i class="fas fa-chevron-right"></i>
+                </button>
+            </div>
+            <div class="slideshow-info">
+                <div class="slideshow-counter" id="slideshow-counter">1 / 1</div>
+                <div class="slideshow-caption" id="slideshow-caption">40 Under 40 Award</div>
+            </div>
+            <div class="slideshow-thumbnails" id="slideshow-thumbnails">
+                <!-- Thumbnails will be inserted here -->
+            </div>
+        </div>
+    `;
+
+    document.body.appendChild(modal);
+
+    // Add event listeners
+    const closeBtn = modal.querySelector('.modal-close');
+    const prevBtn = modal.querySelector('#slideshow-prev');
+    const nextBtn = modal.querySelector('#slideshow-next');
+
+    closeBtn.addEventListener('click', () => {
+        modal.style.display = 'none';
+    });
+
+    prevBtn.addEventListener('click', () => {
+        currentSlideIndex = (currentSlideIndex - 1 + fortyUnder40Files.length) % fortyUnder40Files.length;
+        updateSlideshowContent();
+    });
+
+    nextBtn.addEventListener('click', () => {
+        currentSlideIndex = (currentSlideIndex + 1) % fortyUnder40Files.length;
+        updateSlideshowContent();
+    });
+
+    // Close modal when clicking outside
+    modal.addEventListener('click', (e) => {
+        if (e.target === modal) {
+            modal.style.display = 'none';
+        }
+    });
+
+    // Keyboard navigation
+    document.addEventListener('keydown', function slideshowKeyHandler(e) {
+        if (modal.style.display === 'block') {
+            if (e.key === 'Escape') {
+                modal.style.display = 'none';
+            } else if (e.key === 'ArrowLeft') {
+                currentSlideIndex = (currentSlideIndex - 1 + fortyUnder40Files.length) % fortyUnder40Files.length;
+                updateSlideshowContent();
+            } else if (e.key === 'ArrowRight') {
+                currentSlideIndex = (currentSlideIndex + 1) % fortyUnder40Files.length;
+                updateSlideshowContent();
             }
-        });
+        }
+    });
+
+    return modal;
+}
+
+function updateSlideshowContent() {
+    if (fortyUnder40Files.length === 0) return;
+
+    const currentFile = fortyUnder40Files[currentSlideIndex];
+    const mediaContainer = document.getElementById('slideshow-media');
+    const counter = document.getElementById('slideshow-counter');
+    const caption = document.getElementById('slideshow-caption');
+    const thumbnails = document.getElementById('slideshow-thumbnails');
+
+    // Update media content
+    if (currentFile.isVideo) {
+        mediaContainer.innerHTML = `
+            <video class="slideshow-video" controls autoplay muted>
+                <source src="${currentFile.path}" type="video/mp4">
+                Your browser does not support the video tag.
+            </video>
+        `;
+    } else {
+        mediaContainer.innerHTML = `
+            <img class="slideshow-image" src="${currentFile.path}" alt="${currentFile.name}">
+        `;
     }
+
+    // Update counter
+    counter.textContent = `${currentSlideIndex + 1} / ${fortyUnder40Files.length}`;
+
+    // Update caption
+    caption.textContent = `40 Under 40 Award - ${currentFile.name}`;
+
+    // Update thumbnails
+    thumbnails.innerHTML = '';
+    fortyUnder40Files.forEach((file, index) => {
+        const thumb = document.createElement('div');
+        thumb.className = `slideshow-thumb ${index === currentSlideIndex ? 'active' : ''}`;
+        thumb.innerHTML = `
+            <img src="${file.path}" alt="${file.name}" data-index="${index}">
+            ${file.isVideo ? '<i class="fas fa-play video-icon"></i>' : ''}
+        `;
+        thumb.addEventListener('click', () => {
+            currentSlideIndex = index;
+            updateSlideshowContent();
+        });
+        thumbnails.appendChild(thumb);
+    });
 }
 
 // Function to refresh 40 Under 40 gallery
