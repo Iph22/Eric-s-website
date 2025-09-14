@@ -202,15 +202,15 @@ function createModal() {
     return modal;
 }
 
-function showModal(imageSrc, title,) {
+function showModal(imageSrc, title, description = '') {
     const modalImage = modal.querySelector('.modal-image');
     const modalTitle = modal.querySelector('.modal-title');
-    // const modalDescription = modal.querySelector('.modal-description');
+    const modalDescription = modal.querySelector('.modal-description');
 
     modalImage.src = imageSrc;
     modalImage.alt = title;
     modalTitle.textContent = title;
-    // modalDescription.textContent = description;
+    modalDescription.textContent = description;
 
     modal.style.display = 'block';
 }
@@ -285,14 +285,33 @@ class MediaGallery {
 
     async scanFolder(folderPath, folderKey) {
         try {
-            const response = await fetch('/media.json');
-            const mediaData = await response.json();
+            let apiEndpoint;
+            switch (folderKey) {
+                case 'lifestyle':
+                    apiEndpoint = '/api/lifestyle';
+                    break;
+                case 'trainingVideos':
+                    apiEndpoint = '/api/training-videos';
+                    break;
+                case 'trainingPictures':
+                    apiEndpoint = '/api/training-pictures';
+                    break;
+                default:
+                    console.error(`Unknown folder key: ${folderKey}`);
+                    return [];
+            }
 
-            // Return the array for the matching key
-            const files = mediaData[folderKey] || [];
-            return files;
+            const response = await fetch(apiEndpoint);
+            const data = await response.json();
+
+            if (data.success) {
+                return data.files || [];
+            } else {
+                console.error(`API error for ${folderKey}:`, data.error);
+                return [];
+            }
         } catch (error) {
-            console.error(`Error loading media.json for ${folderKey}:`, error);
+            console.error(`Error loading media for ${folderKey}:`, error);
             return [];
         }
     }
@@ -414,14 +433,6 @@ class MediaGallery {
         // Remove file extension and format for display
         const nameWithoutExt = filename.substring(0, filename.lastIndexOf('.'));
         return nameWithoutExt.replace(/[-_]/g, ' ').replace(/\b\w/g, l => l.toUpperCase());
-    }
-
-    formatFileSize(bytes) {
-        if (bytes === 0) return '0 Bytes';
-        const k = 1024;
-        const sizes = ['Bytes', 'KB', 'MB', 'GB'];
-        const i = Math.floor(Math.log(bytes) / Math.log(k));
-        return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + ' ' + sizes[i];
     }
 
     openImageModal(fileData) {
