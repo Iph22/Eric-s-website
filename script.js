@@ -302,6 +302,20 @@ class MediaGallery {
             }
 
             const response = await fetch(apiEndpoint);
+            
+            // Check if response is ok (status 200-299)
+            if (!response.ok) {
+                console.error(`HTTP error for ${folderKey}: ${response.status} ${response.statusText}`);
+                return [];
+            }
+
+            // Check if response is JSON
+            const contentType = response.headers.get('content-type');
+            if (!contentType || !contentType.includes('application/json')) {
+                console.error(`Non-JSON response for ${folderKey}. Content unavailable.`);
+                return [];
+            }
+
             const data = await response.json();
 
             if (data.success) {
@@ -737,6 +751,20 @@ async function initializeFortyUnder40Gallery() {
     try {
         // Fetch media from the 40 Under 40 folder
         const response = await fetch('/api/forty-under-40');
+        
+        // Check if response is ok (status 200-299)
+        if (!response.ok) {
+            console.error(`HTTP error for forty-under-40: ${response.status} ${response.statusText}`);
+            return;
+        }
+
+        // Check if response is JSON
+        const contentType = response.headers.get('content-type');
+        if (!contentType || !contentType.includes('application/json')) {
+            console.error('Non-JSON response for forty-under-40. Content unavailable.');
+            return;
+        }
+
         const data = await response.json();
 
         if (data.success && data.files && data.files.length > 0) {
