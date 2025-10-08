@@ -1,5 +1,5 @@
-import fs from 'fs/promises';
-import path from 'path';
+const fs = require('fs').promises;
+const path = require('path');
 
 // Supported file extensions
 const IMAGE_EXTENSIONS = ['.jpg', '.jpeg', '.png', '.gif', '.bmp', '.webp', '.svg'];
@@ -60,7 +60,7 @@ async function scanDirectory(dirPath) {
  * @param {Object} req - Request object
  * @param {Object} res - Response object
  */
-export default async function handler(req, res) {
+module.exports = async function handler(req, res) {
     // Only allow GET requests
     if (req.method !== 'GET') {
         return res.status(405).json({ 
