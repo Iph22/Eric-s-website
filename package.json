@@ -6,8 +6,7 @@
   "scripts": {
     "dev": "vercel dev",
     "build": "vercel build",
-    "start": "vercel start",
-    "vercel-build": "vercel-build"
+    "start": "vercel start"
   },
   "dependencies": {
     "@vercel/node": "^3.0.0",
