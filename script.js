@@ -779,16 +779,6 @@ async function initializeFortyUnder40Gallery() {
                     thumbnail.src = firstImage.path;
                     thumbnail.alt = '40 Under 40 Award';
                 }
-            } else {
-                // If no image found, use the first file
-                const firstFile = fortyUnder40Files[0];
-                if (firstFile) {
-                    const thumbnail = document.getElementById('forty-under-40-thumbnail');
-                    if (thumbnail) {
-                        thumbnail.src = firstFile.path;
-                        thumbnail.alt = '40 Under 40 Award';
-                    }
-                }
             }
 
             // Set up click handler for the gallery item
