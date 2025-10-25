@@ -2,6 +2,7 @@
   "name": "coach-eric-website",
   "version": "1.0.0",
   "description": "Eric Darko's Basketball Coach Portfolio Website",
+  "type": "module",
   "main": "server.js",
   "scripts": {
     "start": "node server.js",
@@ -13,6 +14,9 @@
   },
   "devDependencies": {
     "nodemon": "^3.0.1"
+  },
+  "engines": {
+    "node": ">=18.x"
   },
   "keywords": [
     "basketball",
