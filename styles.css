@@ -351,6 +351,7 @@ section {
     overflow: hidden;
     box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
     transition: transform 0.3s ease, box-shadow 0.3s ease;
+    cursor: pointer;
 }
 
 .gallery-item:hover {
@@ -409,6 +410,17 @@ section {
 .gallery-caption p {
     color: #666;
     font-size: 0.95rem;
+}
+
+/* 40 Under 40 Gallery Item */
+#forty-under-40-gallery-item {
+    cursor: pointer;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+#forty-under-40-gallery-item:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
 }
 
 /* Lifestyle Section */
@@ -525,6 +537,7 @@ section {
     box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
     transition: transform 0.3s ease, box-shadow 0.3s ease;
     position: relative;
+    cursor: pointer;
 }
 
 .media-item:hover {
@@ -621,6 +634,7 @@ section {
     gap: 1rem;
     margin-bottom: 2rem;
     justify-content: center;
+    flex-wrap: wrap;
 }
 
 .tab-btn {
@@ -879,16 +893,9 @@ section {
     opacity: 0.8;
 }
 
-/* 40 Under 40 Modal Styles */
-#forty-under-40-gallery-item {
-    cursor: pointer;
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-}
-
-#forty-under-40-gallery-item:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
-}
+/* ============================================
+   MODAL STYLES - Preview & Slideshow
+   ============================================ */
 
 /* Preview Modal */
 .preview-modal {
@@ -901,18 +908,17 @@ section {
     height: 100%;
     background-color: rgba(0, 0, 0, 0.9);
     animation: fadeIn 0.3s ease;
+    overflow-y: auto;
 }
 
 .preview-content {
     position: relative;
-    margin: 5% auto;
+    margin: 3% auto;
     padding: 30px;
-    width: 85%;
-    max-width: 800px;
+    width: 90%;
+    max-width: 900px;
     background: white;
     border-radius: 20px;
-    max-height: 85vh;
-    overflow-y: auto;
 }
 
 .preview-header {
@@ -923,7 +929,7 @@ section {
 }
 
 .preview-header h3 {
-    font-size: 1.8rem;
+    font-size: 2rem;
     color: #333;
     margin-bottom: 10px;
     font-weight: 600;
@@ -938,7 +944,6 @@ section {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
     gap: 25px;
-    max-width: 600px;
     margin: 0 auto;
 }
 
@@ -959,8 +964,10 @@ section {
 
 .preview-media {
     position: relative;
-    height: 250px;
+    width: 100%;
+    height: 280px;
     overflow: hidden;
+    background: #000;
 }
 
 .preview-media img,
@@ -991,7 +998,7 @@ section {
 }
 
 .preview-overlay i {
-    font-size: 2rem;
+    font-size: 2.5rem;
     margin-bottom: 10px;
 }
 
@@ -1005,6 +1012,7 @@ section {
 .preview-caption {
     padding: 15px;
     text-align: center;
+    background: white;
 }
 
 .preview-caption h4 {
@@ -1014,33 +1022,11 @@ section {
     font-weight: 500;
 }
 
-/* Responsive preview modal */
-@media (max-width: 768px) {
-    .preview-content {
-        margin: 10% auto;
-        width: 95%;
-        padding: 20px;
-    }
-    
-    .preview-grid {
-        grid-template-columns: 1fr;
-        gap: 15px;
-    }
-    
-    .preview-header h3 {
-        font-size: 1.5rem;
-    }
-    
-    .preview-media {
-        height: 180px;
-    }
-}
-
 /* Slideshow Modal */
 .slideshow-modal {
     display: none;
     position: fixed;
-    z-index: 2000;
+    z-index: 2001;
     left: 0;
     top: 0;
     width: 100%;
@@ -1051,13 +1037,12 @@ section {
 
 .slideshow-content {
     position: relative;
-    margin: 3% auto;
+    margin: 2% auto;
     padding: 0;
-    width: 90%;
-    height: 85vh;
-    max-width: 1200px;
-    max-height: 800px;
-    background: #222;
+    width: 95%;
+    height: 96vh;
+    max-width: 1400px;
+    background: #1a1a1a;
     border-radius: 15px;
     overflow: hidden;
     display: flex;
@@ -1071,6 +1056,8 @@ section {
     align-items: center;
     justify-content: center;
     background: #000;
+    overflow: hidden;
+    min-height: 0;
 }
 
 .slideshow-media {
@@ -1079,102 +1066,133 @@ section {
     display: flex;
     align-items: center;
     justify-content: center;
+    padding: 20px;
 }
 
 .slideshow-image {
-    width: auto;
-    height: auto;
     max-width: 100%;
     max-height: 100%;
+    width: auto;
+    height: auto;
     object-fit: contain;
-    border-radius: 10px;
+    border-radius: 8px;
 }
 
 .slideshow-video {
     max-width: 100%;
     max-height: 100%;
+    width: auto;
+    height: auto;
     object-fit: contain;
-    border-radius: 10px;
+    border-radius: 8px;
 }
 
 .slideshow-nav {
     position: absolute;
     top: 50%;
     transform: translateY(-50%);
-    background: rgba(255, 255, 255, 0.2);
-    border: none;
+    background: rgba(255, 255, 255, 0.15);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
     color: white;
-    font-size: 24px;
-    padding: 15px 20px;
+    width: 50px;
+    height: 50px;
     border-radius: 50%;
     cursor: pointer;
     transition: all 0.3s ease;
     z-index: 10;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5rem;
 }
 
 .slideshow-nav:hover {
-    background: rgba(255, 255, 255, 0.3);
+    background: rgba(255, 255, 255, 0.25);
     transform: translateY(-50%) scale(1.1);
 }
 
 .slideshow-prev {
-    left: 20px;
+    left: 30px;
 }
 
 .slideshow-next {
-    right: 20px;
+    right: 30px;
 }
 
 .slideshow-info {
-    background: rgba(0, 0, 0, 0.8);
-    padding: 15px 20px;
+    background: rgba(0, 0, 0, 0.9);
+    padding: 20px 30px;
     display: flex;
     justify-content: space-between;
     align-items: center;
     color: white;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
 }
 
 .slideshow-counter {
     font-weight: 600;
-    font-size: 14px;
+    font-size: 1rem;
+    color: #4A90E2;
+    min-width: 80px;
 }
 
 .slideshow-caption {
-    font-size: 16px;
+    font-size: 1.1rem;
     text-align: center;
     flex: 1;
-    margin: 0 20px;
+    margin: 0 30px;
+    font-weight: 500;
 }
 
 .slideshow-thumbnails {
     display: flex;
-    gap: 10px;
-    padding: 15px 20px;
-    background: rgba(0, 0, 0, 0.9);
+    gap: 12px;
+    padding: 20px;
+    background: rgba(0, 0, 0, 0.95);
     overflow-x: auto;
     justify-content: center;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    scrollbar-width: thin;
+    scrollbar-color: #4A90E2 rgba(255, 255, 255, 0.1);
+}
+
+.slideshow-thumbnails::-webkit-scrollbar {
+    height: 8px;
+}
+
+.slideshow-thumbnails::-webkit-scrollbar-track {
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 4px;
+}
+
+.slideshow-thumbnails::-webkit-scrollbar-thumb {
+    background: #4A90E2;
+    border-radius: 4px;
 }
 
 .slideshow-thumb {
     position: relative;
-    width: 60px;
-    height: 60px;
-    border-radius: 8px;
+    width: 80px;
+    height: 80px;
+    border-radius: 10px;
     overflow: hidden;
     cursor: pointer;
     transition: all 0.3s ease;
-    border: 2px solid transparent;
+    border: 3px solid transparent;
     flex-shrink: 0;
+    background: rgba(255, 255, 255, 0.05);
 }
 
 .slideshow-thumb:hover {
     transform: scale(1.05);
-    border-color: rgba(255, 255, 255, 0.5);
+    border-color: rgba(74, 144, 226, 0.5);
 }
 
 .slideshow-thumb.active {
     border-color: #4A90E2;
     transform: scale(1.1);
+    box-shadow: 0 0 20px rgba(74, 144, 226, 0.6);
 }
 
 .slideshow-thumb img {
@@ -1189,54 +1207,79 @@ section {
     left: 50%;
     transform: translate(-50%, -50%);
     color: white;
-    font-size: 16px;
-    text-shadow: 0 0 5px rgba(0, 0, 0, 0.8);
+    font-size: 1.5rem;
+    text-shadow: 0 2px 10px rgba(0, 0, 0, 0.8);
+    background: rgba(0, 0, 0, 0.5);
+    border-radius: 50%;
+    width: 35px;
+    height: 35px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
-/* Responsive slideshow */
-@media (max-width: 768px) {
+/* Modal Close Button */
+.modal-close {
+    position: absolute;
+    top: 15px;
+    right: 25px;
+    color: #aaa;
+    font-size: 35px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: color 0.3s ease;
+    z-index: 100;
+}
+
+.modal-close:hover {
+    color: #4A90E2;
+}
+
+.slideshow-modal .modal-close {
+    color: white;
+    top: 20px;
+    right: 30px;
+    font-size: 40px;
+    text-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
+}
+
+.slideshow-modal .modal-close:hover {
+    color: #4A90E2;
+    transform: scale(1.1);
+}
+
+/* ============================================
+   RESPONSIVE DESIGN
+   ============================================ */
+
+/* Tablet Responsive */
+@media (max-width: 1024px) {
     .slideshow-content {
-        margin: 5% auto;
         width: 98%;
-        height: 90vh;
-        max-height: none;
+        height: 94vh;
     }
 
     .slideshow-nav {
-        padding: 10px 15px;
-        font-size: 20px;
+        width: 45px;
+        height: 45px;
+        font-size: 1.3rem;
     }
 
     .slideshow-prev {
-        left: 10px;
+        left: 20px;
     }
 
     .slideshow-next {
-        right: 10px;
-    }
-
-    .slideshow-info {
-        padding: 10px 15px;
-        flex-direction: column;
-        gap: 10px;
+        right: 20px;
     }
 
     .slideshow-caption {
-        margin: 0;
-        font-size: 14px;
-    }
-
-    .slideshow-thumbnails {
-        padding: 10px 15px;
-    }
-
-    .slideshow-thumb {
-        width: 50px;
-        height: 50px;
+        font-size: 1rem;
+        margin: 0 20px;
     }
 }
 
-/* Responsive Design */
+/* Mobile Responsive */
 @media (max-width: 768px) {
     .nav-menu {
         position: fixed;
@@ -1342,6 +1385,95 @@ section {
     .section-title {
         font-size: 2rem;
     }
+
+    /* Preview Modal - Mobile */
+    .preview-content {
+        margin: 5% auto;
+        width: 95%;
+        padding: 20px;
+    }
+    
+    .preview-header h3 {
+        font-size: 1.5rem;
+    }
+
+    .preview-header p {
+        font-size: 1rem;
+    }
+    
+    .preview-grid {
+        grid-template-columns: 1fr;
+        gap: 20px;
+    }
+    
+    .preview-media {
+        height: 250px;
+    }
+
+    /* Slideshow Modal - Mobile */
+    .slideshow-content {
+        margin: 0;
+        width: 100%;
+        height: 100vh;
+        border-radius: 0;
+    }
+
+    .slideshow-media {
+        padding: 10px;
+    }
+
+    .slideshow-nav {
+        width: 40px;
+        height: 40px;
+        font-size: 1.2rem;
+    }
+
+    .slideshow-prev {
+        left: 15px;
+    }
+
+    .slideshow-next {
+        right: 15px;
+    }
+
+    .slideshow-info {
+        padding: 15px 20px;
+        flex-direction: column;
+        gap: 10px;
+        text-align: center;
+    }
+
+    .slideshow-counter {
+        min-width: auto;
+        font-size: 0.9rem;
+    }
+
+    .slideshow-caption {
+        margin: 0;
+        font-size: 0.95rem;
+    }
+
+    .slideshow-thumbnails {
+        padding: 15px;
+        gap: 10px;
+    }
+
+    .slideshow-thumb {
+        width: 60px;
+        height: 60px;
+    }
+
+    .video-icon {
+        width: 30px;
+        height: 30px;
+        font-size: 1.2rem;
+    }
+
+    .slideshow-modal .modal-close {
+        top: 15px;
+        right: 20px;
+        font-size: 35px;
+    }
 }
 
 @media (max-width: 480px) {
@@ -1369,20 +1501,79 @@ section {
     .nav-container {
         padding: 1rem 15px;
     }
+
+    /* Preview Modal - Small Mobile */
+    .preview-header h3 {
+        font-size: 1.3rem;
+    }
+
+    .preview-media {
+        height: 200px;
+    }
+
+    /* Slideshow Modal - Small Mobile */
+    .slideshow-nav {
+        width: 35px;
+        height: 35px;
+        font-size: 1rem;
+    }
+
+    .slideshow-prev {
+        left: 10px;
+    }
+
+    .slideshow-next {
+        right: 10px;
+    }
+
+    .slideshow-info {
+        padding: 12px 15px;
+    }
+
+    .slideshow-caption {
+        font-size: 0.85rem;
+    }
+
+    .slideshow-counter {
+        font-size: 0.85rem;
+    }
+
+    .slideshow-thumbnails {
+        padding: 12px;
+        gap: 8px;
+    }
+
+    .slideshow-thumb {
+        width: 50px;
+        height: 50px;
+    }
 }
+
+/* ============================================
+   ANIMATIONS
+   ============================================ */
 
 /* Smooth scrolling */
 html {
     scroll-behavior: smooth;
 }
 
-/* Loading animations */
+/* Fade In Animation */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+/* Fade In Up Animation */
 @keyframes fadeInUp {
     from {
         opacity: 0;
         transform: translateY(30px);
     }
-
     to {
         opacity: 1;
         transform: translateY(0);
@@ -1398,7 +1589,10 @@ html {
     animation: fadeInUp 0.8s ease-out;
 }
 
-/* Custom scrollbar */
+/* ============================================
+   CUSTOM SCROLLBAR
+   ============================================ */
+
 ::-webkit-scrollbar {
     width: 8px;
 }
